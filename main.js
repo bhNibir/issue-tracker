@@ -8,17 +8,27 @@ function submitIssue(e) {
   const id = Math.floor(Math.random()*100000000) + '';
   const status = 'Open';
 
-  const issue = { id, description, severity, assignedTo, status };
-  let issues = [];
-  if (localStorage.getItem('issues')){
-    issues = JSON.parse(localStorage.getItem('issues'));
+  if(description === "" || severity === "" || assignedTo === "")
+  {
+    alert("Please fill the all Filed")
   }
-  issues.push(issue);
-  localStorage.setItem('issues', JSON.stringify(issues));
+  else
+  {
 
-  document.getElementById('issueInputForm').reset();
-  fetchIssues();
-  e.preventDefault();
+    const issue = { id, description, severity, assignedTo, status };
+    let issues = [];
+    if (localStorage.getItem('issues')){
+      issues = JSON.parse(localStorage.getItem('issues'));
+    }
+    issues.push(issue);
+    localStorage.setItem('issues', JSON.stringify(issues));
+
+    document.getElementById('issueInputForm').reset();
+    fetchIssues();
+    e.preventDefault();
+
+  }
+  
 }
 
 const closeIssue = id => {
@@ -31,8 +41,9 @@ const closeIssue = id => {
 
 const deleteIssue = id => {
   const issues = JSON.parse(localStorage.getItem('issues'));
-  const remainingIssues = issues.filter( issue => issue.id !== id )
+  const remainingIssues = issues.filter( issue => issue.id !== id.toString() )
   localStorage.setItem('issues', JSON.stringify(remainingIssues));
+  fetchIssues()
 }
 
 const issueCount = issues =>{
@@ -40,12 +51,14 @@ const issueCount = issues =>{
     const total = getIssueSpan("total-issue")
     const open = getIssueSpan("open-issue")
     const closed = getIssueSpan("closed-issue")
-    if(issues.length === undefined){
-      total.innerText = "0"
+    if(issues.length === undefined)
+    {
+      total.innerText = 0
       open.innerText = 0
       closed.innerText = 0
     }
-    else{
+    else
+    {
       const totalIssue = issues.length
       const totalOpenIssue = issues.filter(openIssues => openIssues.status === "Open").length
       const totalClosedIssue = totalIssue - totalOpenIssue
