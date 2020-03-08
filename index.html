@@ -10,7 +10,15 @@
   </head>
   <body onload="fetchIssues()">
     <div class="container">
-      <h1>Issue Tracker: </h1>
+      <div class="issue-counter">
+        <h1 >Issue Tracker:       
+          <p class="btn btn-primary">Total <span id="total-issue" class="badge badge-light"></span></p>
+          <p class="btn btn-warning">Open <span id="open-issue" class="badge badge-light"></span></p>
+          <p class="btn btn-success">Closed <span id="closed-issue" class="badge badge-light"></span></p>
+        </h1> 
+        </div>
+     
+      
       <div class="jumbotron">
         <h3>Add New Issue:</h3>
         <form id="issueInputForm">

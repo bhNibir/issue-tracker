@@ -35,10 +35,34 @@ const deleteIssue = id => {
   localStorage.setItem('issues', JSON.stringify(remainingIssues));
 }
 
+const issueCount = issues =>{
+    const getIssueSpan = id => document.getElementById(id)
+    const total = getIssueSpan("total-issue")
+    const open = getIssueSpan("open-issue")
+    const closed = getIssueSpan("closed-issue")
+    if(issues.length === undefined){
+      total.innerText = "0"
+      open.innerText = 0
+      closed.innerText = 0
+    }
+    else{
+      const totalIssue = issues.length
+      const totalOpenIssue = issues.filter(openIssues => openIssues.status === "Open").length
+      const totalClosedIssue = totalIssue - totalOpenIssue
+
+      total.innerText = totalIssue
+      open.innerText = totalOpenIssue
+      closed.innerText = totalClosedIssue
+    }
+    
+}
+
+
 const fetchIssues = () => {
   const issues = JSON.parse(localStorage.getItem('issues')) || 0; // set default value 0 and fixed null error
   const issuesList = document.getElementById('issuesList');
   issuesList.innerHTML = '';
+  issueCount(issues)
 
   for (var i = 0; i < issues.length; i++) {
     const {id, description, severity, assignedTo, status} = issues[i];
