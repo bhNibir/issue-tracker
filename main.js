@@ -82,18 +82,21 @@ const fetchIssues = () => {
     
     // for Strike Line
     let newDescription = "";
+    let labelColor = ""
     if(status==="Closed")
     {
       newDescription = "<s>"+description+"</s>";
+      labelColor = "label-success"
     }
     else
     {
       newDescription = description;
+      labelColor = "label-info"
     }
     
     issuesList.innerHTML +=   `<div class="well">
                               <h6>Issue ID: ${id} </h6>
-                              <p><span class="label label-info"> ${status} </span></p>
+                              <p><span class="label ${labelColor}"> ${status} </span></p>
                               <h3> ${newDescription} </h3>
                               <p><span class="glyphicon glyphicon-time"></span> ${severity}</p>
                               <p><span class="glyphicon glyphicon-user"></span> ${assignedTo}</p>
